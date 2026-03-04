@@ -1,9 +1,9 @@
 import { RouterProvider } from 'react-router-dom'
 import AppRouter from '@app/router/routes'
-import './global.css'
 import type { ReactNode } from 'react'
 import { ChakraProvider, createSystem, defaultConfig, defineConfig } from '@chakra-ui/react'
-
+import './global.css'
+import '@shared/i18n'
 
 const config = defineConfig({
   globalCss: {

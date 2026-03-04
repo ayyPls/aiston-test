@@ -7,9 +7,11 @@ import MOCK_REQUESTS_DATA from "@shared/const/mock-data";
 import { ERequestStatus } from "@shared/types/request";
 import Button from "@shared/ui/button";
 import HorizontalLine from "@shared/ui/hr";
+import { useTranslation } from "react-i18next";
 
 
 const RequestsPage = (): ReactNode => {
+    const { t } = useTranslation()
     const [searchString, setSearchString] = useState<string>("")
     const debouncedSearchString = useDebounce(searchString.trim())
     
@@ -32,13 +34,13 @@ const RequestsPage = (): ReactNode => {
         {/* filters */} 
         <Flex gap="10px">
             {/* TODO: use i18n to set name strings to enum values? */}
-            {Object.entries(ERequestStatus).map((status) => {
-                return <Button key={status[0]}>{status[0]}</Button>
+            {Object.keys(ERequestStatus).map((status) => {
+                return <Button key={status}>{t(`requestStatus.${status}`)}</Button>
             })}
             <Button variant="primary">Все статусы</Button>
         </Flex>
         <HorizontalLine />
-        <RequestsTable data={filteredRequests}/>
+        <RequestsTable data={filteredRequests} />
     </Spacer>
 }
 

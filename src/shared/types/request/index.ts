@@ -1,3 +1,7 @@
+interface IUUID {
+    readonly id: string
+}
+
 enum ERequestPriority {
     LOW = 0,
     MEDIUM = 1,
@@ -6,38 +10,35 @@ enum ERequestPriority {
 }
 
 enum ERequestStatus {
-    NEW,
-    CANCELED,
-    DONE,
-    CLOSED,
-    SPARE_PARTS_AWAITING,
-    UNDER_CONCIDERATION
+    NEW= "NEW",
+    CANCELED = "CANCELED",
+    DONE = "DONE",
+    CLOSED = "CLOSED",
+    SPARE_PARTS_AWAITING = "SPARE_PARTS_AWAITING",
+    UNDER_CONCIDERATION = "UNDER_CONCIDERATION"
 }
 
 enum ERequestCategory {
-    FRIDGES,
-    AIR_CONDITIONAIR,
-    IT,
-    PLUMBING,
-    CASH_REGISTER,
-    MEASURING_EQUIPMENT
+    FRIDGES = "FRIDGES",
+    AIR_CONDITIONAIR = "AIR_CONDITIONAIR",
+    IT = "IT",
+    PLUMBING = "PLUMBING",
+    CASH_REGISTER = "CASH_REGISTER",
+    MEASURING_EQUIPMENT = "MEASURING_EQUIPMENT"
 }
 
-interface IRequestAddress {
-    readonly id: string
+interface IRequestAddress extends IUUID{
     address: string
 }
 
-interface IUser {
-    readonly id: string
+interface IUser extends IUUID{
     name: string
 }
 
-interface IRequestDto {
-    readonly id: string
+interface IRequestDto extends IUUID{
     readonly code: string
     createdAt: string
-    priopity: ERequestPriority
+    priority: ERequestPriority
     theme: string
     description: string
     category: ERequestCategory
@@ -55,6 +56,7 @@ export {
 }
 
 export type {
+    IUUID,
     IRequestDto,
     IRequestAddress,
 }

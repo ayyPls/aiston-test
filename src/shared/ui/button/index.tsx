@@ -7,13 +7,19 @@ const StyledButton = chakra("button", {
         backgroundColor: "gray",
         padding: "8px 17px",
         cursor: "pointer",
-        textWrap: "nowrap"
+        textWrap: "nowrap",
+        _hover: {
+            backgroundColor: "ButtonHighlight"
+        }
     },
     variants: {
         variant: {
             primary: {
                 backgroundColor: "black",
-                color: "white"
+                color: "white",
+                _hover: {
+                    backgroundColor: "ButtonText"
+                }
             }
         }
     }
