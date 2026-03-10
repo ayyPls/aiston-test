@@ -1,12 +1,9 @@
-const AppRouterPath = {
-  DEFAULT: '',
-  ANY_PATH: '*',
-//   VIEWER: '/viewer',
-//   UI: '/ui',
-//   LOGIN: '/login',
-  NOT_FOUND: '/404',
-} as const
+enum EAppRouterPath {
+  DEFAULT = '',
+  ANY_PATH = '*',
+  NOT_FOUND = '/404',
+}
 
 export {
-  AppRouterPath
+  EAppRouterPath
 }

@@ -1,4 +1,4 @@
-import { Flex, Spacer } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import RequestsTable from "@widgets/requests-table";
 import { ReactNode, useMemo, useState } from "react";
 import SearchInput from "@shared/ui/input"
@@ -6,42 +6,52 @@ import useDebounce from "@shared/hooks/use-debounce";
 import MOCK_REQUESTS_DATA from "@shared/const/mock-data";
 import { ERequestStatus } from "@shared/types/request";
 import Button from "@shared/ui/button";
-import HorizontalLine from "@shared/ui/hr";
-import { useTranslation } from "react-i18next";
-
+import RequestsTabs from "@widgets/requests-tabs";
+import { chakra } from "@chakra-ui/react";
 
 const RequestsPage = (): ReactNode => {
-    const { t } = useTranslation()
+    const [currentStatusTab, setCurrentStatusTab] = useState<ERequestStatus | undefined>(undefined)
     const [searchString, setSearchString] = useState<string>("")
     const debouncedSearchString = useDebounce(searchString.trim())
-    
+
     const filteredRequests = useMemo(() => {
-        return MOCK_REQUESTS_DATA.filter((request) => request.code.includes(debouncedSearchString) || request.theme.includes(debouncedSearchString))
-    }, [debouncedSearchString])
+        return MOCK_REQUESTS_DATA.filter(({theme, code, status}) => {
+            return (currentStatusTab ? status === currentStatusTab : true) && (code.toLowerCase().includes(debouncedSearchString) || theme.toLowerCase().includes(debouncedSearchString))
+        }
+        )
+    }, [debouncedSearchString, currentStatusTab])
     
     const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault()
         const searchString = event.currentTarget.value
-        setSearchString(searchString)
+        setSearchString(searchString.toLowerCase())
     }
 
-    return <Spacer spaceY="21px">
-        <Flex gap="13px" maxHeight="40px">
-            <SearchInput onChange={handleChangeSearch} name="search" placeholder="Поиск по номеру или теме заявки"/>
-            <Button>Экспорт</Button>
-            <Button variant="primary">Создать новую заявку</Button>
+    const handleFilterRequestsByStatusTab = (status?: ERequestStatus) => {
+        setCurrentStatusTab(status)
+    }
+
+    return <>
+        <Box display={{base: "none", md: "block"}}>
+            <Box p={{base: "25px 19px", md: "21px 40px 0 40px"}}>
+                <Flex gap="13px" maxHeight="40px">
+                    <SearchInput onChange={handleChangeSearch} name="search" placeholder="Поиск по номеру или теме заявки" />
+                    <Button>Экспорт</Button>
+                    <Button variant="primary">Создать новую заявку</Button>
+                </Flex>
+                <RequestsTabs value={currentStatusTab} onChange={handleFilterRequestsByStatusTab} />
+            </Box>
+            <chakra.hr color="gray"/>
+            <Box px={{base: "19px", md: "40px"}}>
+                <RequestsTable data={filteredRequests} />
+            </Box>
+        </Box>
+        <Flex display={{base: "flex", md: "none"}} p={{base: "25px 19px", md: "21px 40px"}}>
+            <Flex gap="10px" maxWidth="100dvw" overflowX="scroll"  scrollSnapAlign="start" scrollSnapType="x mandatory">
+                <RequestsTabs value={currentStatusTab} onChange={handleFilterRequestsByStatusTab}/>
+            </Flex>
         </Flex>
-        {/* filters */} 
-        <Flex gap="10px">
-            {/* TODO: use i18n to set name strings to enum values? */}
-            {Object.keys(ERequestStatus).map((status) => {
-                return <Button key={status}>{t(`requestStatus.${status}`)}</Button>
-            })}
-            <Button variant="primary">Все статусы</Button>
-        </Flex>
-        <HorizontalLine />
-        <RequestsTable data={filteredRequests} />
-    </Spacer>
+    </>
 }
 
 export default RequestsPage

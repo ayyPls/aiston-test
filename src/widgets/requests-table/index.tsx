@@ -2,13 +2,14 @@ import { FC } from "react"
 import TableComponent from "@shared/ui/table"
 import { IRequestDto } from "@shared/types/request"
 import { ITableProps } from "@shared/ui/table/interface"
-import { mapRequestPropertyTranslation } from "@shared/utils/map-translation"
+import { mapRequestPropertyCompareAlgorythm, mapRequestPropertyTranslation } from "@shared/utils/map-translation"
 import { IRequestTableProps } from "./interface"
 
 
-const RequestTableProps: Pick<ITableProps<IRequestDto>, "mapEntityPropertyFn" | "properties" | "i18nPrefix"> = {
+const RequestTableProps: Pick<ITableProps<IRequestDto>, "mapEntityPropertyFn" | "properties" | "i18nPrefix" | "comparePropertyFn"> = {
     properties: ["code", "address", "createdAt", "priority", "theme", "category", "executor", "reactionTime", "solutionTime", "status"],
     mapEntityPropertyFn: mapRequestPropertyTranslation,
+    comparePropertyFn: mapRequestPropertyCompareAlgorythm,
     i18nPrefix: "request"
 }
 

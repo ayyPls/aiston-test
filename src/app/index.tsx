@@ -1,39 +1,12 @@
 import { RouterProvider } from 'react-router-dom'
 import AppRouter from '@app/router/routes'
 import type { ReactNode } from 'react'
-import { ChakraProvider, createSystem, defaultConfig, defineConfig } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
+import { styleSystem } from './theme'
 import './global.css'
 import '@shared/i18n'
 
-const config = defineConfig({
-  globalCss: {
-    "html, body": {
-      margin: 0,
-      padding: 0,
-      fontFamily: "Inter, sans-serif"
-    }
-  },
-  theme: {
-    tokens: {
-      colors: {
-        gray: { value: "rgba(241, 241, 241, 1)"},
-        borderGray: { value: "rgba(217, 225, 236, 1)"},
-        black: { value: "rgba(28, 28, 28, 1)" },
-        purple: { value: "rgba(240, 205, 250, 1)" },
-        yellow: { value: "rgba(255, 235, 179, 1)" },
-        green: { value: "rgba(162, 227, 164, 1)" },
-      }
-    },
-    breakpoints: {
 
-    },
-    textStyles: {
-      body: {},
-    }
-  }
-})
-
-const styleSystem = createSystem(defaultConfig, config)
 
 const App = (): ReactNode => {
   return <ChakraProvider value={styleSystem}>

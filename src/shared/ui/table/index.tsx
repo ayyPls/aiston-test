@@ -1,6 +1,7 @@
 import { chakra, Table } from "@chakra-ui/react"
 import { ITableEntity, ITableProps } from "./interface"
 import { useTranslation } from "react-i18next"
+import { useMemo, useState } from "react"
 
 
 const StyledTableRow = chakra(Table.Row, {
@@ -19,14 +20,41 @@ const StyledTableCell = chakra(Table.Cell, {
 
 // Generic component to render entities in table view
 
-const TableComponent = <T extends ITableEntity,>({ data, properties = [], mapEntityPropertyFn, i18nPrefix }: ITableProps<T>) => {
+
+// TODO: pass default sort entity property
+// TODO: sort according to translated string, not the original one
+// 
+
+const TableComponent = <T extends ITableEntity,>({ data, properties = [], mapEntityPropertyFn, comparePropertyFn, i18nPrefix }: ITableProps<T>) => {
     const { t } = useTranslation()
-    
+
+    const [tableSortProperty, setTableSortProperty] = useState<keyof T | undefined>(undefined)
+
+
+    const handleSortByPropertyClick = (property: keyof T) => {
+        if (property === tableSortProperty) {
+            // TODO: reverse sorted list
+        }
+        else setTableSortProperty(property)
+    }
+
+
+    const sortedTableByEntityProperty = useMemo(() => {
+        if (tableSortProperty !== undefined) {
+            data.sort(comparePropertyFn?.(tableSortProperty))
+            console.log(tableSortProperty, comparePropertyFn?.(tableSortProperty))
+        }
+        return data
+    }, [data, tableSortProperty, comparePropertyFn])
+
     return <Table.Root variant="line" marginTop="31px">
         <Table.Header bgColor="gray">
             <StyledTableRow bgColor="inherit">
                 {
-                    properties.map((property, index) => <StyledTableCell key={index}>
+                    properties.map((property, index) => <StyledTableCell
+                        key={index}
+                        onClick={() => handleSortByPropertyClick(property)}
+                    >
                         {t(`${i18nPrefix}.${property.toString()}`)}
                     </StyledTableCell>)
                 }
@@ -34,7 +62,7 @@ const TableComponent = <T extends ITableEntity,>({ data, properties = [], mapEnt
         </Table.Header>
         <Table.Body>
             {
-                data.map((entity, index) => <StyledTableRow key={index}>
+                sortedTableByEntityProperty.map((entity, index) => <StyledTableRow key={index}>
                     {
                         properties.map((property, index) => <StyledTableCell key={index}>
                             {mapEntityPropertyFn(entity, property)}

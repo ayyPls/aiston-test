@@ -6,7 +6,11 @@ const Input = chakra("input", {
         borderStyle: "solid",
         borderColor: "borderGray",
         width: "full",
-        paddingX: "13px"
+        paddingX: "13px",
+        borderRadius: "4px",
+        _placeholder: {
+            color: "gray"
+        }
     }
 })
 

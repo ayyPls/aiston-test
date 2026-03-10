@@ -5,13 +5,18 @@ import { ComponentProps, FC } from "react";
 const StyledButton = chakra("button", {
     base: {
         backgroundColor: "gray",
-        padding: "8px 17px",
+        padding: {
+            base: "4px 12px",
+            md: "8px 17px",
+        },
         cursor: "pointer",
         textWrap: "nowrap",
+        borderRadius: "4px",
         _hover: {
             backgroundColor: "ButtonHighlight"
         }
     },
+    
     variants: {
         variant: {
             primary: {
