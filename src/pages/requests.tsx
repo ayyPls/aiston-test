@@ -8,6 +8,8 @@ import { ERequestStatus } from "@shared/types/request";
 import Button from "@shared/ui/button";
 import RequestsTabs from "@widgets/requests-tabs";
 import { chakra } from "@chakra-ui/react";
+import RequestCardsList from "@widgets/request-cards-list";
+import CreateRequestModal from "@widgets/create-request-modal";
 
 const RequestsPage = (): ReactNode => {
     const [currentStatusTab, setCurrentStatusTab] = useState<ERequestStatus | undefined>(undefined)
@@ -15,12 +17,12 @@ const RequestsPage = (): ReactNode => {
     const debouncedSearchString = useDebounce(searchString.trim())
 
     const filteredRequests = useMemo(() => {
-        return MOCK_REQUESTS_DATA.filter(({theme, code, status}) => {
+        return MOCK_REQUESTS_DATA.filter(({ theme, code, status }) => {
             return (currentStatusTab ? status === currentStatusTab : true) && (code.toLowerCase().includes(debouncedSearchString) || theme.toLowerCase().includes(debouncedSearchString))
         }
         )
     }, [debouncedSearchString, currentStatusTab])
-    
+
     const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault()
         const searchString = event.currentTarget.value
@@ -32,25 +34,31 @@ const RequestsPage = (): ReactNode => {
     }
 
     return <>
-        <Box display={{base: "none", md: "block"}}>
-            <Box p={{base: "25px 19px", md: "21px 40px 0 40px"}}>
+        <Box display={{ base: "none", md: "block" }}>
+            <Box p={{ base: "25px 19px", md: "21px 40px 0 40px" }}>
                 <Flex gap="13px" maxHeight="40px">
                     <SearchInput onChange={handleChangeSearch} name="search" placeholder="Поиск по номеру или теме заявки" />
                     <Button>Экспорт</Button>
-                    <Button variant="primary">Создать новую заявку</Button>
+                    <CreateRequestModal />
                 </Flex>
-                <RequestsTabs value={currentStatusTab} onChange={handleFilterRequestsByStatusTab} />
+                <Flex gap="24px" alignItems="center">
+                    <RequestsTabs value={currentStatusTab} onChange={handleFilterRequestsByStatusTab} />
+                    <chakra.div width="3px" height={"40px"} background="#D9E1EC" />
+                    <Button maxHeight="40px">
+                        Показать только мои
+                    </Button>
+
+                </Flex>
             </Box>
-            <chakra.hr color="gray"/>
-            <Box px={{base: "19px", md: "40px"}}>
+            <chakra.hr color="gray" />
+            <Box px={{ base: "19px", md: "40px" }}>
                 <RequestsTable data={filteredRequests} />
             </Box>
         </Box>
-        <Flex display={{base: "flex", md: "none"}} p={{base: "25px 19px", md: "21px 40px"}}>
-            <Flex gap="10px" maxWidth="100dvw" overflowX="scroll"  scrollSnapAlign="start" scrollSnapType="x mandatory">
-                <RequestsTabs value={currentStatusTab} onChange={handleFilterRequestsByStatusTab}/>
-            </Flex>
-        </Flex>
+        <Box display={{ base: "block", md: "none" }} p={{ base: "25px 19px", md: "21px 40px" }}>
+            <RequestsTabs value={currentStatusTab} onChange={handleFilterRequestsByStatusTab} />
+            <RequestCardsList items={filteredRequests} />
+        </Box>
     </>
 }
 

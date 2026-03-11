@@ -1,6 +1,7 @@
 import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react"
 
-const config = defineConfig({
+// TODO: for request code import one more font
+const theme = defineConfig({
   globalCss: {
     "html, body": {
       margin: 0,
@@ -25,9 +26,9 @@ const config = defineConfig({
     textStyles: {
       body: {},
     }
-  }
+  },
 })
 
-const styleSystem = createSystem(defaultConfig, config)
+const styleSystem = createSystem(defaultConfig, theme)
 
 export { styleSystem }

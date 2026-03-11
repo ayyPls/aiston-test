@@ -37,7 +37,7 @@
     "baseUrl": ".",
     "paths": {
       "@assets/*": [
-        "src/shared/ui/assets/*"
+        "src/shared/assets/*"
       ],
       "@app/*": [
         "src/app/*"

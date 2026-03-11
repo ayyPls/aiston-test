@@ -1,0 +1,123 @@
+import {
+    chakra,
+    Dialog,
+    Flex,
+    Portal,
+    Textarea,
+} from "@chakra-ui/react"
+import Button from "@shared/ui/button"
+import CloseIcon from "@assets/icons/close.svg"
+import Select from "@shared/ui/select"
+import MOCK_REQUESTS_DATA from "@shared/const/mock-data"
+import Input from "@shared/ui/input"
+
+const CloseModalIcon = chakra("div", {
+    base: {
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
+        width: "18px",
+        height: "18px",
+        backgroundImage: `url("${CloseIcon}")`
+
+    },
+})
+
+
+const CreateRequestForm = chakra("form", {
+    base: {
+        display: "flex",
+        flexDirection: { base: "column", md: "row" },
+        gap: "32px"
+    }
+})
+
+
+const ADDRESS_OPTIONS = MOCK_REQUESTS_DATA.map(el => el.address.address)
+
+const StyledSelect = chakra(Select, {
+    base: {
+        border: "1px solid #B0B0B0",
+        height: "48px",
+        color: "#B0B0B0",
+        fontSize: "14px",
+        width: "full",
+        borderRadius: "8px",
+        padding: "15.5px 16px",
+        fontWeight: 400,
+    },
+
+})
+
+const CreateRequestModal = () => {
+    return (
+        <Dialog.Root>
+            <Dialog.Trigger asChild>
+                <Button variant="primary">Создать новую заявку</Button>
+            </Dialog.Trigger>
+
+            <Portal>
+                <Dialog.Backdrop />
+
+                <Dialog.Positioner>
+                    <Dialog.Content borderRadius={{ base: 0, md: "15px" }} marginTop={{ base: 0, md: "64px" }} minH={{ base: "100dvh", md: "auto" }} minW={{ base: "100dvw", md: "52dvw" }}>
+
+                        <Dialog.Header display="flex" justifyContent="space-between" alignItems="center">
+                            <Dialog.Title fontSize="24px">Создание заявки</Dialog.Title>
+                            <Dialog.CloseTrigger asChild>
+                                <Button position="inherit" bgColor="white" p="0">
+                                    <CloseModalIcon />
+                                </Button>
+                            </Dialog.CloseTrigger>
+                        </Dialog.Header>
+
+                        <Dialog.Body>
+                            <CreateRequestForm>
+                                <Flex direction="column" gap="46px">
+                                    <Flex gap="8px" flexDirection="column">
+                                        <label htmlFor="address">Аптека</label>
+                                        <StyledSelect id="address" name="address" placeholder="Выберите аптеку от которой исходит заявка" options={ADDRESS_OPTIONS} onSelect={() => { }} />
+
+                                    </Flex>
+                                    <Flex gap="8px" flexDirection="column">
+                                        <label htmlFor="">Категория заявки</label>
+                                        <StyledSelect id="category" name="category" placeholder="Холодильники, кондиционеры или другое" options={ADDRESS_OPTIONS} onSelect={() => { }} />
+                                        <Flex gap="8px">
+                                            <input id="garantee" name="garantee" type="checkbox" />
+                                            <label htmlFor="garantee">Гарантийный случай?</label>
+                                        </Flex>
+                                    </Flex>
+                                </Flex>
+                                <Flex flexDirection="column" gap="24px">
+                                    <Flex flexDirection="column" gap="8px">
+                                        <label htmlFor="theme">Категория заявки</label>
+                                        <Input id="theme" name="theme" placeholder="Дайте заявке краткое название: например, сломался холодильник или не работает кондиционер" />
+                                    </Flex>
+                                    <Flex flexDirection="column" gap="8px">
+                                        <label htmlFor="priority">Приоритет</label>
+                                        <StyledSelect id="priority" name="priority" placeholder="Холодильники, кондиционеры или другое" options={ADDRESS_OPTIONS} onSelect={() => { }} />
+                                    </Flex>
+                                    <Flex flexDirection="column" gap="8px">
+                                        <label htmlFor="priority">Приоритет</label>
+                                        <Textarea rows={6} id="priority" name="priority" placeholder="Кратко опишите проблему" />
+                                    </Flex>
+                                    <Flex flexDirection="column" gap="8px">
+                                        <label htmlFor="files">Прикрепите файлы</label>
+                                    </Flex>
+
+                                </Flex>
+                            </CreateRequestForm>
+                        </Dialog.Body>
+                        <Dialog.Footer justifyContent="flex-start">
+                            <Button variant="primary">Создать заявку</Button>
+                            <Dialog.CloseTrigger asChild position="inherit">
+                                <Button>Отмена</Button>
+                            </Dialog.CloseTrigger>
+                        </Dialog.Footer>
+                    </Dialog.Content>
+                </Dialog.Positioner>
+            </Portal>
+        </Dialog.Root>
+    )
+}
+
+export default CreateRequestModal

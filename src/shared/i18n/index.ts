@@ -2,12 +2,26 @@ import { ERequestCategory, ERequestPriority, ERequestStatus } from "@shared/type
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import { II18nResources } from "./interface"
+import { EAppRouterPath } from "@app/router/paths"
 
-// TODO: typed array of languages?
+// TODO: typed array of languages
 
 const resources: II18nResources = {
     ru: {
         translation: {
+            routes: {
+                [EAppRouterPath.DEFAULT]: "Заявки",
+                [EAppRouterPath.NOT_FOUND]: "Отчеты",
+                [EAppRouterPath.ANY_PATH]: "Справочники",
+            },
+            datetime: {
+                today: "Сегодня",
+                yesterday: "Вчера",
+                // TODO: etc..
+                january: "январе",
+                february: "феврале",
+                march: "марте",
+            },
             request: {
                 id: "ID",
                 code: "№",
@@ -23,12 +37,14 @@ const resources: II18nResources = {
                 address: "Аптека"
             },
             requestStatus: {
-                [ERequestStatus.NEW]: "Новый",
-                [ERequestStatus.CANCELED]: "Отменена",
-                [ERequestStatus.DONE]: "Готов",
-                [ERequestStatus.CLOSED]: "Закрыта",
+                [ERequestStatus.NEW]: "Новая",
+                [ERequestStatus.CANCELED]: "Отклонена",
+                [ERequestStatus.DONE]: "Готовo",
+                [ERequestStatus.PAUSED]: "На паузе",
+                [ERequestStatus.CLOSED]: "Закрыто",
                 [ERequestStatus.SPARE_PARTS_AWAITING]: "Ожидает запчастей",
                 [ERequestStatus.UNDER_CONCIDERATION]: "На рассмотрении",
+                [ERequestStatus.IN_PROCESS]: "В работе",
             },
             requestCategory: {
                 [ERequestCategory.AIR_CONDITIONAIR]: "Кондиционер",

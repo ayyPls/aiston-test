@@ -6,7 +6,7 @@ import { useMemo, useState } from "react"
 
 const StyledTableRow = chakra(Table.Row, {
     base: {
-        // border: "none"
+        borderBottom: "1px solid #D9E1EC"
     }
 })
 
@@ -20,12 +20,9 @@ const StyledTableCell = chakra(Table.Cell, {
 
 // Generic component to render entities in table view
 
+// TODO: filter instead of sorting
 
-// TODO: pass default sort entity property
-// TODO: sort according to translated string, not the original one
-// 
-
-const TableComponent = <T extends ITableEntity,>({ data, properties = [], mapEntityPropertyFn, comparePropertyFn, i18nPrefix }: ITableProps<T>) => {
+const TableComponent = <T extends ITableEntity,>({ data, properties = [], mapEntityPropertyComponent, comparePropertyFn, i18nPrefix }: ITableProps<T>) => {
     const { t } = useTranslation()
 
     const [tableSortProperty, setTableSortProperty] = useState<keyof T | undefined>(undefined)
@@ -65,10 +62,10 @@ const TableComponent = <T extends ITableEntity,>({ data, properties = [], mapEnt
                 sortedTableByEntityProperty.map((entity, index) => <StyledTableRow key={index}>
                     {
                         properties.map((property, index) => <StyledTableCell key={index}>
-                            {mapEntityPropertyFn(entity, property)}
+                            {mapEntityPropertyComponent(entity, property)}
                         </StyledTableCell>)
                     }
-            </StyledTableRow>)
+                </StyledTableRow>)
             }
         </Table.Body>
     </Table.Root>

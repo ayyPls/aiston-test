@@ -13,7 +13,7 @@ export default defineConfig({
 				'@pages': path.resolve(__dirname, 'src/pages'),
 				'@shared': path.resolve(__dirname, 'src/shared'),
 				'@widgets': path.resolve(__dirname, 'src/widgets'),
-				'@assets': path.resolve(__dirname, 'src/shared/ui/assets'),
+				'@assets': path.resolve(__dirname, 'src/shared/assets'),
 			}
 		}
 })

@@ -1,6 +1,6 @@
-import { chakra } from "@chakra-ui/react"
-import { FC, SyntheticEvent } from "react"
-import SelectArrow from "@shared/assets/icons/select-icon.svg"
+import { chakra, ChakraComponent } from "@chakra-ui/react"
+import { ComponentProps, FC, SyntheticEvent } from "react"
+import SelectArrow from "@assets/icons/select-icon.svg"
 
 const StyledSelect = chakra("select", {
     base: {
@@ -22,22 +22,25 @@ const StyledOption = chakra("option", {
     }
 })
 
-interface ISelectProps{
+interface ISelectProps extends Omit<ComponentProps<typeof StyledSelect>, "onSelect"> {
     options: Array<string>
     onSelect: (option: string) => void
+    placeholder?: string
+    name?: string
 }
 
 // NOTE: rewrite to Chakra Select component
 
-const Select:FC<ISelectProps> = ({ options, onSelect }) => {
+const Select: FC<ISelectProps> = ({ placeholder, options, name, onSelect, ...props }) => {
     const handleOnSelect = (event: SyntheticEvent<HTMLSelectElement>) => {
         onSelect(event.currentTarget.value)
     }
-    return <StyledSelect name="selectName" onChange={handleOnSelect}>
+    return <StyledSelect defaultValue="" name={name} onChange={handleOnSelect} {...props}>
+        {placeholder && <StyledOption value="" disabled>{placeholder}</StyledOption>}
         {
             options.map((option, index) => <StyledOption value={option} key={index}>
                 {option}
-            </StyledOption>) 
+            </StyledOption>)
         }
     </StyledSelect>
 }
