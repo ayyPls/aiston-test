@@ -1,12 +1,23 @@
-import { chakra, Table } from "@chakra-ui/react"
+import { chakra, Flex, Table } from "@chakra-ui/react"
 import { ITableEntity, ITableProps } from "./interface"
 import { useTranslation } from "react-i18next"
 import { useMemo, useState } from "react"
-
+import FilterIcon from "@assets/icons/filter.svg"
 
 const StyledTableRow = chakra(Table.Row, {
     base: {
         borderBottom: "1px solid #D9E1EC"
+    }
+})
+
+const FilterIconButton = chakra("button", {
+    base: {
+        cursor: "pointer",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
+        width: "1.5rem",
+        height: "1.5rem",
+        backgroundImage: `url("${FilterIcon}")`
     }
 })
 
@@ -52,7 +63,10 @@ const TableComponent = <T extends ITableEntity,>({ data, properties = [], mapEnt
                         key={index}
                         onClick={() => handleSortByPropertyClick(property)}
                     >
-                        {t(`${i18nPrefix}.${property.toString()}`)}
+                        <Flex justifyContent="space-between" alignItems="center">
+                            {t(`${i18nPrefix}.${property.toString()}`)}
+                            <FilterIconButton />
+                        </Flex>
                     </StyledTableCell>)
                 }
             </StyledTableRow>

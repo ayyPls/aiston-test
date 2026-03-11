@@ -58,6 +58,7 @@ const RequestsPage = (): ReactNode => {
         <Box display={{ base: "block", md: "none" }} p={{ base: "25px 19px", md: "21px 40px" }}>
             <RequestsTabs value={currentStatusTab} onChange={handleFilterRequestsByStatusTab} />
             <RequestCardsList items={filteredRequests} />
+            <CreateRequestModal />
         </Box>
     </>
 }
