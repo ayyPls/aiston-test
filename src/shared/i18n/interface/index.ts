@@ -20,6 +20,7 @@ interface II18nResources extends Resource {
             requestStatus: Record<ERequestStatus, string>
             requestCategory: Record<ERequestCategory, string>
             requestPriority: Record<ERequestPriority, string>
+            requestPriorityDescription: Record<ERequestPriority, string>
         }
     }
 }

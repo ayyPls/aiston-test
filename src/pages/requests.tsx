@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 import RequestsTable from "@widgets/requests-table";
 import { ReactNode, useMemo, useState } from "react";
 import SearchInput from "@shared/ui/input"
@@ -10,6 +10,17 @@ import RequestsTabs from "@widgets/requests-tabs";
 import { chakra } from "@chakra-ui/react";
 import RequestCardsList from "@widgets/request-cards-list";
 import CreateRequestModal from "@widgets/create-request-modal";
+import PDFIcon from "@assets/icons/pdf.svg";
+
+const ExportPDFIcon = chakra(Flex, {
+    base: {
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
+        width: "1.5rem",
+        height: "1.5rem",
+        backgroundImage: `url("${PDFIcon}")`
+    }
+})
 
 const RequestsPage = (): ReactNode => {
     const [currentStatusTab, setCurrentStatusTab] = useState<ERequestStatus | undefined>(undefined)
@@ -37,8 +48,13 @@ const RequestsPage = (): ReactNode => {
         <Box display={{ base: "none", md: "block" }}>
             <Box p={{ base: "25px 19px", md: "21px 40px 0 40px" }}>
                 <Flex gap="13px" maxHeight="40px">
-                    <SearchInput onChange={handleChangeSearch} name="search" placeholder="Поиск по номеру или теме заявки" />
-                    <Button>Экспорт</Button>
+                    <SearchInput variant="search" onChange={handleChangeSearch} name="search" placeholder="Поиск по номеру или теме заявки" />
+                    <Button variant="outlined" p="8px 10px">
+                        <Flex gap="12px" alignItems="center">
+                            <ExportPDFIcon />
+                            <Text>Экспорт</Text>
+                        </Flex>
+                    </Button>
                     <CreateRequestModal />
                 </Flex>
                 <Flex gap="24px" alignItems="center">

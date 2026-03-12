@@ -59,6 +59,12 @@ const resources: II18nResources = {
                 [ERequestPriority.MEDIUM]: "Средний",
                 [ERequestPriority.HIGH]: "Высокий",
                 [ERequestPriority.CRITICAL]: "Критический",
+            },
+            requestPriorityDescription: {
+                [ERequestPriority.LOW]: "не влияет на эффективность, не стопорит",
+                [ERequestPriority.MEDIUM]: "влияет на эффективность, но не стопорит",
+                [ERequestPriority.HIGH]: "влияет на эффективность, но стопорит",
+                [ERequestPriority.CRITICAL]: "влияет на эффективность, стопорит",
             }
         }
     }

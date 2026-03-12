@@ -1,16 +1,40 @@
-import { chakra } from "@chakra-ui/react";
+import { Badge, Avatar, chakra } from "@chakra-ui/react";
+import { FC } from "react";
 
-// TODO: loader/skeleton
-const Avatar = chakra("div", {
+const StyledUserNotificationsBadge = chakra(Badge, {
     base: {
-        backgroundColor: "gray",
-        backgroundImage: 'url("https://thispersondoesnotexist.com/")',        width: "2rem",
-        height: "2rem",
-        backgroundRepeat: "no-repeat",
-        borderRadius: "100%",
-        backgroundPosition: "center",
-        backgroundSize: "cover"
+        position: "absolute",
+        transformOrigin: "center center",
+        transform: "translate(calc(100%), -100%)",
+        backgroundColor: "#B93C3C",
+        width: "20px",
+        height: "20px",
+        color: "#F1F1F1",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: "100%"
     }
 })
 
-export { Avatar }
+const UserAvatarWrapper = chakra("div", {
+    base: {
+        position: 'relative'
+    }
+})
+
+interface IUserAvatarProps {
+    notificationsCount?: number
+}
+
+const UserAvatar: FC<IUserAvatarProps> = ({ notificationsCount }) => {
+    return <UserAvatarWrapper>
+        <Avatar.Root size="sm">
+            <Avatar.Image src="https://placehold.co/600x400" />
+            <Avatar.Fallback />
+        </Avatar.Root>
+        {notificationsCount && <StyledUserNotificationsBadge>{notificationsCount}</StyledUserNotificationsBadge>}
+    </UserAvatarWrapper>
+}
+
+export default UserAvatar

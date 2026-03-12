@@ -3,10 +3,10 @@ interface IUUID {
 }
 
 enum ERequestPriority {
-    LOW = 0,
-    MEDIUM = 1,
-    HIGH = 2,
-    CRITICAL = 3
+    LOW = "0",
+    MEDIUM = "1",
+    HIGH = "2",
+    CRITICAL = "3"
 }
 
 enum ERequestStatus {

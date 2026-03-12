@@ -6,7 +6,7 @@ import { mapRequestPropertyCompareAlgorythm, mapRequestPropertyTranslation } fro
 import { IRequestTableProps } from "./interface"
 import { RequestStatus } from "@shared/ui/request-status"
 import { RequestPriority } from "@shared/ui/request-priority"
-import { Flex } from "@chakra-ui/react"
+import { Flex, Text } from "@chakra-ui/react"
 import { ERequestTime, RequestTime } from "@shared/ui/request-time"
 
 const mapRequestPropertyToTableComponent = (entity: IRequestDto, property: keyof IRequestDto) => {
@@ -29,6 +29,21 @@ const mapRequestPropertyToTableComponent = (entity: IRequestDto, property: keyof
                     : ERequestTime.IN_PROCESS
                 }
             />
+        }
+        case "createdAt": {
+            const date = new Date(entity[property])
+            return <Flex gap="6px" color="#1C1C1C">
+                {/* TODO: move in styles */}
+                <span>{`${date.toLocaleDateString()}`}</span>
+                <span style={{ opacity: ".3" }}>{`${date.toLocaleTimeString()}`}</span>
+            </Flex>
+        }
+        case "address": {
+            return <Flex gap="10px">
+                {/* NOTE: i dont understand what this number represets */}
+                <Text p="1px 3px" borderRadius="4px" backgroundColor="#F1F1F1" color="#1C1C1C">{(Math.random() * 100).toFixed().padStart(3, "0")}</Text>
+                <Text>{entity[property].address}</Text>
+            </Flex>
         }
         default:
             return mapRequestPropertyTranslation(entity, property)

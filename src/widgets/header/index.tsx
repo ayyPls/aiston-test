@@ -1,11 +1,11 @@
 import { EAppRouterPath } from "@app/router/paths"
-import { Link as ReactRouterLink, useNavigate } from "react-router-dom"
+import { NavLink as ReactRouterLink, useNavigate } from "react-router-dom"
 import { chakra, Flex, Link, Text } from "@chakra-ui/react"
 import Button from "@shared/ui/button"
 import Select from "@shared/ui/select"
 import i18n from "@shared/i18n"
 import LogoutIcon from "@assets/icons/logout.svg"
-import { Avatar } from "@shared/ui/avatar"
+import UserAvatar from "@shared/ui/avatar"
 
 const LINKS_SELECT_OPTIONS: Array<{ label: string, value: EAppRouterPath }> = [
     {
@@ -58,29 +58,30 @@ const Header = () => {
     }
     return <StyledHeader>
         <Flex gap="14px" flexGrow="1" display={{ base: "none", md: "flex" }}>
-            <Link asChild>
+            <Link asChild color="#B0B0B0" _currentPage={{ color: "#1C1C1C" }}>
                 <ReactRouterLink to={EAppRouterPath.DEFAULT}>
                     {i18n.t(`routes.${EAppRouterPath.DEFAULT}`)}
                 </ReactRouterLink>
             </Link>
-            <Link asChild>
+            <Link asChild color="#B0B0B0" _currentPage={{ color: "#1C1C1C" }}>
                 <ReactRouterLink to={EAppRouterPath.NOT_FOUND}>
                     {i18n.t(`routes.${EAppRouterPath.NOT_FOUND}`)}
                 </ReactRouterLink>
             </Link>
-            <Link asChild>
+            <Link asChild color="#B0B0B0" _currentPage={{ color: "#1C1C1C" }}>
                 <ReactRouterLink to={EAppRouterPath.ANY_PATH}>
                     {i18n.t(`routes.${EAppRouterPath.ANY_PATH}`)}
                 </ReactRouterLink>
             </Link>
         </Flex>
-        {/* mobile only */}
-        <Flex display={{ base: "flex", md: "none" }}>
+        <Flex w="100%" display={{ base: "flex", md: "none" }} justifyContent="space-between" alignItems="flex-start">
             <Select options={SELECT_OPTION_LABELS} onSelect={onLinkSelect} />
+            <UserAvatar notificationsCount={2} />
         </Flex>
+
         <Flex alignItems="center" gap="27px" display={{ base: "none", md: "flex" }}>
-            <Avatar />
-            <Button padding="8px 20px">
+            <UserAvatar notificationsCount={2} />
+            <Button variant="outlined" padding="8px 20px">
                 <Flex gap=".25rem">
                     <StyledLogoutIcon />
                     <Text fontSize="1rem">Выйти</Text>

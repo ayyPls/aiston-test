@@ -1,7 +1,6 @@
 import { chakra } from "@chakra-ui/react";
 import { ComponentProps, FC } from "react";
 
-// TODO: add variants for primary and default
 const StyledButton = chakra("button", {
     base: {
         backgroundColor: "gray",
@@ -16,7 +15,7 @@ const StyledButton = chakra("button", {
             backgroundColor: "ButtonHighlight"
         }
     },
-    
+
     variants: {
         variant: {
             primary: {
@@ -25,6 +24,10 @@ const StyledButton = chakra("button", {
                 _hover: {
                     backgroundColor: "ButtonText"
                 }
+            },
+            outlined: {
+                border: "1px solid #D9E1EC",
+
             }
         }
     }
@@ -32,11 +35,9 @@ const StyledButton = chakra("button", {
 
 
 // TODO: rewrite with chakra composition(?)
-interface IButtonProps extends ComponentProps<typeof StyledButton> {
-    __TEMP?: "TEMP"
-}
+interface IButtonProps extends ComponentProps<typeof StyledButton> { }
 
-const Button: FC<IButtonProps> = (props)=> {
+const Button: FC<IButtonProps> = (props) => {
     return <StyledButton {...props} />
 }
 
